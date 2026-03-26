@@ -1,0 +1,14 @@
+{
+  "model": "Random Forest",
+  "n_test": 6286,
+  "accuracy": 0.8794,
+  "f1_nlos": 0.8748,
+  "roc_auc": 0.9489,
+  "avg_prec": 0.9559,
+  "sensitivity": 0.8419,
+  "specificity": 0.9169,
+  "tp": 2647,
+  "tn": 2881,
+  "fp": 261,
+  "fn": 497
+}

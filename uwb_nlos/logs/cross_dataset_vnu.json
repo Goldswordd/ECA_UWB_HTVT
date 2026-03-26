@@ -1,0 +1,22 @@
+{
+  "VNU_total_samples": 9000,
+  "protocol": "20% calibration (head fine-tune) / 80% test",
+  "ECA-UWB": {
+    "zero_shot_acc": 0.8036,
+    "zero_shot_auc": 0.9421,
+    "calibrated_acc": 0.8933,
+    "calibrated_auc": 0.9412,
+    "head_tuned_acc": 0.9813888888888889,
+    "head_tuned_auc": 0.9974812500000001,
+    "cm": [
+      [
+        3503,
+        97
+      ],
+      [
+        37,
+        3563
+      ]
+    ]
+  }
+}

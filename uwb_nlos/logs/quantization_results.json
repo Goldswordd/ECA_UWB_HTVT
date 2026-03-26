@@ -1,0 +1,18 @@
+{
+  "float32": {
+    "size_kb": 18.1,
+    "accuracy": 91.45,
+    "f1": 91.43,
+    "auc": 97.48,
+    "latency_ms": 0.94
+  },
+  "int8_dynamic": {
+    "size_kb": 17.8,
+    "accuracy": 91.2,
+    "f1": 91.19,
+    "auc": 97.42,
+    "latency_ms": 1.32
+  },
+  "accuracy_drop_pp": 0.25,
+  "size_compression_ratio": 1.0
+}

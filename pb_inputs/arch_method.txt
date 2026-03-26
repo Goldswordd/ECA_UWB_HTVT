@@ -1,0 +1,41 @@
+ECA-UWB: A Lightweight Dual-Branch Architecture for UWB NLOS/LOS Identification
+
+ECA-UWB is a binary classifier that takes a 57-dimensional input vector and outputs a single logit for NLOS/LOS identification. The input is split into two parts: a 50-sample CIR (Channel Impulse Response) window and a 7-dimensional channel diagnostics vector.
+
+## Input
+x ∈ ℝ⁵⁷ = [CIR window (50 samples) | Channel diagnostics (7-dim)]
+
+## CIR Branch (processes CIR window)
+1. Reshape: (B, 50) → (B, 1, 50)
+2. Conv1d(in=1, out=16, kernel=5) + BatchNorm + ReLU → (B, 16, 50)
+3. MaxPool1d(kernel=2) → (B, 16, 25)
+4. ECA Module (Efficient Channel Attention):
+   - Global Average Pool over length → (B, 16)
+   - Transpose → (B, 1, 16)
+   - Conv1d(kernel=3, no bias) → channel weights (only 3 parameters!)
+   - Sigmoid activation → attention weights (B, 16, 1)
+   - Multiply attention weights with feature map → recalibrated (B, 16, 25)
+5. Conv1d(in=16, out=16, kernel=3) + BatchNorm + ReLU → (B, 16, 25)
+6. Global Average Pool → f_cir ∈ ℝ¹⁶
+
+## Auxiliary Branch (processes diagnostics)
+1. Linear(7 → 32) + ReLU → (B, 32)
+2. Linear(32 → 16) + ReLU → (B, 16) = f_aux ∈ ℝ¹⁶
+
+## Gated Fusion
+f_fused = g₁ · f_cir + g₂ · f_aux
+where g = Sigmoid(W_g · [f_cir ; f_aux]) — learnable gate weights (2×16 outputs)
+
+## Classifier
+Linear(16 → 32) + ReLU + Dropout(0.3) → Linear(32 → 1) → ŷ (logit)
+
+## Parameter Count
+- Conv1(1→16) + BN: 160
+- ECA module (k=3): 3  ← key innovation
+- Conv2(16→16) + BN: 784
+- Aux MLP: 784
+- Gated Fusion: 66
+- Classifier: 577
+- Total: 2,374 parameters
+
+The ECA module is the key novelty: it applies channel attention with only 3 parameters (a single Conv1d with kernel=3 and no bias over the channel dimension), achieving strong performance improvements while adding negligible cost.

@@ -1,0 +1,10 @@
+{
+  "labels": ["TN", "FP", "FN", "TP"],
+  "counts": [2974, 175, 320, 2812],
+  "matrix": [[2974, 175], [320, 2812]],
+  "row_pct": [[94.4, 5.6], [10.2, 89.8]],
+  "actual": ["LOS", "LOS", "NLOS", "NLOS"],
+  "predicted": ["LOS", "NLOS", "LOS", "NLOS"],
+  "accuracy_pct": 92.12,
+  "auc_pct": 97.60
+}

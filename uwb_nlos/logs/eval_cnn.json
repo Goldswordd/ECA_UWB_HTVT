@@ -1,0 +1,14 @@
+{
+  "model": "CNN (Dual-Branch)",
+  "n_test": 6286,
+  "accuracy": 0.8882,
+  "f1_nlos": 0.8837,
+  "roc_auc": 0.9533,
+  "avg_prec": 0.9598,
+  "sensitivity": 0.8496,
+  "specificity": 0.9268,
+  "tp": 2671,
+  "tn": 2912,
+  "fp": 230,
+  "fn": 473
+}

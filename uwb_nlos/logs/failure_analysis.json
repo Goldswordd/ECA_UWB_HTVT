@@ -1,0 +1,58 @@
+{
+  "total_test": 6137,
+  "total_misclassified": 503,
+  "false_negatives": 272,
+  "false_positives": 231,
+  "threshold": 0.54,
+  "per_environment": {
+    "Apartment": {
+      "total": 860,
+      "fn": 29,
+      "fp": 36,
+      "fn_pct": 3.37,
+      "fp_pct": 4.19
+    },
+    "Bedroom": {
+      "total": 841,
+      "fn": 36,
+      "fp": 39,
+      "fn_pct": 4.28,
+      "fp_pct": 4.64
+    },
+    "Boiler Room": {
+      "total": 851,
+      "fn": 27,
+      "fp": 37,
+      "fn_pct": 3.17,
+      "fp_pct": 4.35
+    },
+    "Kitchen/Living Room": {
+      "total": 875,
+      "fn": 36,
+      "fp": 28,
+      "fn_pct": 4.11,
+      "fp_pct": 3.2
+    },
+    "Office 1": {
+      "total": 909,
+      "fn": 52,
+      "fp": 26,
+      "fn_pct": 5.72,
+      "fp_pct": 2.86
+    },
+    "Office 2": {
+      "total": 892,
+      "fn": 52,
+      "fp": 33,
+      "fn_pct": 5.83,
+      "fp_pct": 3.7
+    },
+    "Workshop": {
+      "total": 909,
+      "fn": 40,
+      "fp": 32,
+      "fn_pct": 4.4,
+      "fp_pct": 3.52
+    }
+  }
+}

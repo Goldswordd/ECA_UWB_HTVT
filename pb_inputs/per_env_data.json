@@ -1,0 +1,7 @@
+{
+  "environments": ["Office 1", "Office 2", "Apartment", "Workshop", "Kitchen/Living", "Bedroom", "Boiler Room"],
+  "Accuracy": [92.63, 92.58, 93.25, 93.50, 92.77, 92.83, 93.33],
+  "LOS_Recall": [94.82, 95.00, 95.68, 95.89, 95.35, 95.52, 95.63],
+  "NLOS_Recall": [90.40, 90.14, 90.81, 91.19, 90.12, 90.12, 91.11],
+  "mean_accuracy": 93.0
+}
