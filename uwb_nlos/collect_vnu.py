@@ -113,17 +113,26 @@ def collect(env: str, label: str, n_samples: int, port: str):
     print(f"Port      : {port}  @{BAUD}")
     print(f"Môi trường: {env}")
     print(f"Label     : {label} ({expected_label})")
-    print(f"Mục tiêu  : {n_samples} mẫu")
+    print(f"Mục tiêu  : {n_samples} mẫu (sẽ tự động lọc mẫu trùng do mất sóng)")
     print(f"Lưu vào   : {out_path}")
     print()
-    input("Nhấn Enter để bắt đầu thu thập, Ctrl+C để hủy...\n")
+    input("Nhấn Enter để chuẩn bị thu thập, Ctrl+C để hủy...\n")
+
+    # Đếm ngược 5 giây cho người dùng di chuyển
+    print("Vui lòng di chuyển vào vị trí...")
+    for i in range(5, 0, -1):
+        print(f"Bắt đầu thu thập sau {i} giây...", end="\r")
+        time.sleep(1)
+    print("Bắt đầu thu thập dữ liệu!               \n") # Khoảng trắng để ghi đè dòng đếm ngược
 
     ser = serial.Serial(port, BAUD, timeout=2)
     time.sleep(0.5)
     ser.reset_input_buffer()
 
-    count   = 0
-    skipped = 0
+    count       = 0
+    skipped     = 0  # Bỏ qua do lỗi parse/sanity fail
+    dup_skipped = 0  # Bỏ qua do trùng lặp liên tục
+    last_row    = None
 
     with open(out_path, "w") as f:
         f.write(OUTPUT_HEADER + "\n")
@@ -147,14 +156,23 @@ def collect(env: str, label: str, n_samples: int, port: str):
                     skipped += 1
                     continue
 
+                # --- Lọc mẫu trùng lặp liên tiếp ---
+                if row == last_row:
+                    dup_skipped += 1
+                    continue
+                
+                # Cập nhật last_row và ghi vào file
+                last_row = row
+
                 f.write(row + "\n")
                 f.flush()
                 count += 1
 
+                # Cập nhật thanh tiến trình mỗi 50 mẫu (hoặc bạn có thể giảm xuống để thấy mượt hơn)
                 if count % 50 == 0:
                     pct = count / n_samples * 100
                     bar = "#" * (count * 20 // n_samples)
-                    print(f"\r  [{bar:<20}] {count}/{n_samples} ({pct:.0f}%)  skip={skipped}",
+                    print(f"\r  [{bar:<20}] {count}/{n_samples} ({pct:.0f}%)  lỗi={skipped}  trùng={dup_skipped}",
                           end="", flush=True)
 
         except KeyboardInterrupt:
@@ -162,8 +180,10 @@ def collect(env: str, label: str, n_samples: int, port: str):
 
     ser.close()
     print(f"\n\nHoàn thành: {count} mẫu → {out_path}")
-    if skipped:
-        print(f"Bỏ qua     : {skipped} dòng lỗi/sanity-fail")
+    if skipped or dup_skipped:
+        print("Thống kê bỏ qua:")
+        print(f" - Lỗi format/Sanity-fail : {skipped} dòng")
+        print(f" - Mẫu trùng lặp liên tục : {dup_skipped} dòng")
 
 
 def monitor(port: str):

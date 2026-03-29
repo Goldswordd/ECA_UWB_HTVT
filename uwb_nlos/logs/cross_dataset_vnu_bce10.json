@@ -3,27 +3,29 @@
   "VNU_calib_samples": 1800,
   "VNU_test_samples": 7200,
   "protocol": "20% calibration / 80% test (stratified seed=42)",
+  "backbone_objective": "ECA-UWB: w+=1.0 (ecauwb_full.pt); SA-TinyML: w+=1.0; MS-CNN-SA: w+=1.0",
+  "head_objective": "All models: standard BCE (pos_weight=1.0)",
   "ECA-UWB": {
     "zero_shot": {
       "per_env_acc": {
-        "Room": 50.66,
-        "Hallway": 49.52,
+        "Room": 50.58,
+        "Hallway": 49.56,
         "Lobby": 49.81
       },
-      "overall_auc": 0.5823
+      "overall_auc": 0.4958
     },
     "head_adapted": {
-      "acc": 96.11,
-      "f1": 96.18,
-      "auc": 0.9947,
+      "acc": 98.12,
+      "f1": 98.14,
+      "auc": 0.9989,
       "cm": [
         [
-          3396,
-          204
+          3494,
+          106
         ],
         [
-          76,
-          3524
+          29,
+          3571
         ]
       ]
     }
@@ -38,9 +40,9 @@
       "overall_auc": 0.5136
     },
     "head_adapted": {
-      "acc": 98.67,
-      "f1": 98.67,
-      "auc": 0.999,
+      "acc": 98.74,
+      "f1": 98.74,
+      "auc": 0.9991,
       "n_params": 2331
     }
   },
@@ -54,9 +56,9 @@
       "overall_auc": 0.7483
     },
     "head_adapted": {
-      "acc": 97.93,
-      "f1": 97.95,
-      "auc": 0.9982,
+      "acc": 98.14,
+      "f1": 98.14,
+      "auc": 0.9984,
       "n_params": 7025
     }
   }
